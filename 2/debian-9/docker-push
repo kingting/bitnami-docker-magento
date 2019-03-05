@@ -1,0 +1,2 @@
+cat ./docker-password docker login --username kingting --password-stdin
+docker push kingting/magento:2.3.0 
