@@ -8,7 +8,7 @@ https://magento.com/
 
 ## Docker Compose
 
-```bash
+```console
 $ curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-magento/master/docker-compose.yml > docker-compose.yml
 $ docker-compose up -d
 ```
@@ -27,19 +27,16 @@ $ docker-compose up -d
 
 # How to deploy Magento in Kubernetes?
 
-Deploying Bitnami applications as Helm Charts is the easiest way to get started with our applications on Kubernetes. Read more about the installation in the [Bitnami Magento Chart GitHub repository](https://github.com/bitnami/charts/tree/master/upstreamed/magento).
+Deploying Bitnami applications as Helm Charts is the easiest way to get started with our applications on Kubernetes. Read more about the installation in the [Bitnami Magento Chart GitHub repository](https://github.com/bitnami/charts/tree/master/bitnami/magento).
 
 Bitnami containers can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters.
 
 # Supported tags and respective `Dockerfile` links
 
-> NOTE: Debian 8 images have been deprecated in favor of Debian 9 images. Bitnami will not longer publish new Docker images based on Debian 8.
-
-Learn more about the Bitnami tagging policy and the difference between rolling tags and immutable tags [in our documentation page](https://docs.bitnami.com/containers/how-to/understand-rolling-tags-containers/).
+Learn more about the Bitnami tagging policy and the difference between rolling tags and immutable tags [in our documentation page](https://docs.bitnami.com/tutorials/understand-rolling-tags-containers/).
 
 
-* [`2-ol-7`, `2.3.2-ol-7-r36` (2/ol-7/Dockerfile)](https://github.com/bitnami/bitnami-docker-magento/blob/2.3.2-ol-7-r36/2/ol-7/Dockerfile)
-* [`2-debian-9`, `2.3.2-debian-9-r31`, `2`, `2.3.2`, `2.3.2-r31`, `latest` (2/debian-9/Dockerfile)](https://github.com/bitnami/bitnami-docker-magento/blob/2.3.2-debian-9-r31/2/debian-9/Dockerfile)
+* [`2-debian-10`, `2.3.5-debian-10-r79`, `2`, `2.3.5`, `latest` (2/debian-10/Dockerfile)](https://github.com/bitnami/bitnami-docker-magento/blob/2.3.5-debian-10-r79/2/debian-10/Dockerfile)
 
 Subscribe to project updates by watching the [bitnami/magento GitHub repo](https://github.com/bitnami/bitnami-docker-magento).
 
@@ -57,7 +54,7 @@ Running Magento with a database server is the recommended way. You can either us
 
 The main folder of this repository contains a functional [`docker-compose.yml`](https://github.com/bitnami/bitnami-docker-magento/blob/master/docker-compose.yml) file. Run the application using it as shown below:
 
-```bash
+```console
 $ curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-magento/master/docker-compose.yml > docker-compose.yml
 $ docker-compose up -d
 ``` 
@@ -68,13 +65,13 @@ If you want to run the application manually instead of using docker-compose, the
 
 1. Create a new network for the application and the database:
 
-  ```bash
+  ```console
   $ docker network create magento-tier
   ```
 
 2. Create a volume for MariaDB persistence and create a MariaDB container
 
-  ```bash
+  ```console
   $ docker volume create --name mariadb_data
   $ docker run -d --name mariadb \
     -e ALLOW_EMPTY_PASSWORD=yes \
@@ -90,7 +87,7 @@ If you want to run the application manually instead of using docker-compose, the
 
 3. Create volumes for Magento persistence and launch the container
 
-  ```bash
+  ```console
   $ docker volume create --name magento_data
   $ docker run -d --name magento -p 80:80 -p 443:443 \
     -e MAGENTO_DATABASE_USER=bn_magento \
@@ -139,13 +136,13 @@ In this case you need to specify the directories to mount on the run command. Th
 
 1. Create a network (if it does not exist):
 
-  ```bash
+  ```console
   $ docker network create magento-tier
   ```
 
 2. Create a MariaDB container with host volume:
 
-  ```bash
+  ```console
   $ docker run -d --name mariadb
     -e ALLOW_EMPTY_PASSWORD=yes \
     -e MARIADB_USER=bn_magento \
@@ -160,7 +157,7 @@ In this case you need to specify the directories to mount on the run command. Th
 
 3. Create the Magento container with host volumes:
 
-  ```bash
+  ```console
   $ docker run -d --name magento -p 80:80 -p 443:443 \
     -e MAGENTO_DATABASE_USER=bn_magento \
     -e MAGENTO_DATABASE_PASSWORD=your_password \
@@ -174,9 +171,13 @@ In this case you need to specify the directories to mount on the run command. Th
 
 Bitnami provides up-to-date versions of MariaDB and Magento, including security patches, soon after they are made upstream. We recommend that you follow these steps to upgrade your container. We will cover here the upgrade of the Magento container. For the MariaDB upgrade see https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#upgrade-this-image
 
+To upgrade the Magento application, follow the [official update guide](https://devdocs.magento.com/guides/v2.4/install-gde/install/cli/dev_update-magento.html).
+
+To upgrade the components included in the Magento container image (such as Apache or PHP), follow these steps:
+
 1. Get the updated images:
 
-  ```bash
+  ```console
   $ docker pull bitnami/magento:latest
   ```
 
@@ -187,7 +188,7 @@ Bitnami provides up-to-date versions of MariaDB and Magento, including security 
 
 3. Take a snapshot of the application state
 
-```bash
+```console
 $ rsync -a /path/to/magento-persistence /path/to/magento-persistence.bkp.$(date +%Y%m%d-%H.%M.%S)
 ```
 
@@ -209,7 +210,7 @@ You can use these snapshots to restore the application state should the upgrade 
 
 ## Environment variables
 
-When you start the magento image, you can adjust the configuration of the instance by passing one or more environment variables either on the docker-compose file or on the docker run command line. If you want to add a new environment variable:
+When you start the magento image, you can adjust the configuration of the instance by passing one or more environment variables either on the docker-compose file or on the `docker run` command line. If you want to add a new environment variable:
 
  * For docker-compose, add the variable to the [`docker-compose.yml`](https://github.com/bitnami/bitnami-docker-magento/blob/master/docker-compose.yml) file present in this repository:
  
@@ -223,7 +224,7 @@ magento:
 
  * For manual execution add a `-e` option with each variable and value:
 
-  ```bash
+  ```console
   $ docker run -d --name magento -p 80:80 -p 443:443 \
     -e MAGENTO_PASSWORD=my_password1234 \
     --net magento-tier \
@@ -245,6 +246,7 @@ Available variables:
 - `EXTERNAL_HTTP_PORT_NUMBER`: Port to access Magento from outside of the container using HTTP. Used to configure Magento's internal routes. Default: **80**
 - `EXTERNAL_HTTPS_PORT_NUMBER`: Port to access Magento from outside of the container using HTTPS. Used to configure Magento's internal routes. Default: **443**
 - `MAGENTO_MODE`: Magento mode. Valid values: **default**, **production**, **developer**. Default: **default**
+- `MAGENTO_USE_SECURE_ADMIN`: Use SSL to access the Magento Admin. Valid values: **yes**, **no**. Default: **no**
 
 #### Search configuration
 
@@ -278,6 +280,10 @@ Below you can see the available environment variables for each option:
 - `MYSQL_CLIENT_CREATE_DATABASE_PASSWORD`: Database password for the `MYSQL_CLIENT_CREATE_DATABASE_USER` user. No defaults.
 - `MYSQL_CLIENT_CREATE_DATABASE_PRIVILEGES`: Comma-separated list of privileges to grant to the database user. Default: **ALL**
 - `ALLOW_EMPTY_PASSWORD`: It can be used to allow blank passwords. Default: **no**
+
+##### PHP configuration
+
+- `PHP_MEMORY_LIMIT`: Memory limit for PHP. Default: **768M**
 
 # Customize this image
 
@@ -370,6 +376,10 @@ volumes:
 
 # Notable Changes
 
+## 2.3.5-debian-10-r57
+
+- To avoid issues running custom plugins and themes, the container image has been modified to persist the entire Magento `htdocs` directory.  As a consecuence of this change, it is not possible to update the application by changing the image tag anymore, instead, it is needed to [follow the official update guide](https://devdocs.magento.com/guides/v2.3/comp-mgr/cli/cli-upgrade.html).
+
 ## 2.3.1-debian-9-r44 and 2.3.1-ol-7-r53
 
 - This image has been adapted so it's easier to customize. See the [Customize this image](#customize-this-image) section for more information.
@@ -383,7 +393,7 @@ We'd love for you to contribute to this container. You can request new features 
 
 # Issues
 
-If you encountered a problem running this container, you can file an [issue](https://github.com/bitnami/bitnami-docker-magento/issues). For us to provide better support, be sure to include the following information in your issue:
+If you encountered a problem running this container, you can file an [issue](https://github.com/bitnami/bitnami-docker-magento/issues/new). For us to provide better support, be sure to include the following information in your issue:
 
 - Host OS and version
 - Docker version (`$ docker version`)
@@ -393,7 +403,7 @@ If you encountered a problem running this container, you can file an [issue](htt
 
 # License
 
-Copyright 2016-2019 Bitnami
+Copyright 2016-2020 Bitnami
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
