@@ -1,10 +1,5 @@
-if [ "$#" -lt 2 ]
-then
-  echo "Usage: $0 <IMAGE> <Tag>"
-  echo "example: $0  magento2 1.0.0"
-  exit 1
-fi
-IMAGE=$1
-TAG=$2
+IMAGE=magento
+TAG=$(grep BITNAMI_IMAGE_VERSION Dockerfile | awk -F= '{print $2}' | awk '{print $1}' | tr -d '"')
+echo $TAG
 docker build -t kingting/${IMAGE}:$TAG .
-echo "Date: `date` Tag: ${TAG} " >> .history
+echo "Date: `date` image: kingting/$IMAGE:$TAG created" >> .history

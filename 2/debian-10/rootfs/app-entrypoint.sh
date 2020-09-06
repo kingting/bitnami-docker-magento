@@ -10,7 +10,7 @@ if [[ "$1" == "nami" && "$2" == "start" ]] || [[ "$1" == "/run.sh" ]]; then
     . /magento-init.sh
     nami_initialize php apache mysql-client magento
     info "Installing extensions modules"
-    ./extensions.sh
+    ./app.sh
     info "Starting gosu... "
     . /post-init.sh
 fi
