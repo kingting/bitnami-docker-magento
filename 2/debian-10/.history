@@ -5,3 +5,5 @@ Date: Sun Sep  6 04:53:12 PDT 2020 image: magento:"2.3.5-debian-10-r79" created
 Date: Sun Sep  6 04:55:32 PDT 2020 image: magento: created
 Date: Sun Sep  6 04:58:18 PDT 2020 image: magento:"2.3.5-debian-10-r79" created
 Date: Sun Sep  6 05:05:30 PDT 2020 image: magento:2.3.5-debian-10-r79 created
+Date: Sun Sep  6 05:24:21 PDT 2020 image: kingting/magento:2.4.0-debian-10-r16 created
+Date: Sun Sep  6 06:10:50 PDT 2020 image: kingting/magento:2.4.0-debian-10-r16 created
